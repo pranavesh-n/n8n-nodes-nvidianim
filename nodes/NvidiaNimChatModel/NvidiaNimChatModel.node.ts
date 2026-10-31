@@ -319,7 +319,11 @@ export class NvidiaNimChatModel implements INodeType {
 		const rawBaseUrl = (typeof options.baseUrl === 'string' && options.baseUrl.trim())
 			? options.baseUrl.trim()
 			: credentials.baseUrl || credentials.url || NVIDIA_API_BASE_URL;
-		const baseUrl = rawBaseUrl.replace(/\/+$/, '');
+		let baseUrl = rawBaseUrl.replace(/\/+$/, '');
+		baseUrl = baseUrl.replace(/\/(chat\/)?completions$/, '');
+		if (baseUrl.includes('integrate.api.nvidia.com') && !baseUrl.endsWith('/v1')) {
+			baseUrl = `${baseUrl}/v1`;
+		}
 
 		const temperature = typeof options.temperature === 'number' ? options.temperature : undefined;
 		const maxTokens = typeof options.maxTokens === 'number' ? options.maxTokens : undefined;
