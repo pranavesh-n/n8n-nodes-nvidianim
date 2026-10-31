@@ -1,0 +1,61 @@
+{
+  "name": "n8n-nodes-nvidianim",
+  "version": "0.1.0",
+  "description": "n8n community node for NVIDIA NIM hosted models and inference APIs",
+  "license": "MIT",
+  "homepage": "https://github.com/pranavesh-n/n8n-nodes-nvidianim",
+  "keywords": [
+    "n8n-community-node-package",
+    "nvidia",
+    "nim",
+    "ai",
+    "llm"
+  ],
+  "author": {
+    "name": "Pranavesh N",
+    "email": "pranaveshnandakumar@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pranavesh-n/n8n-nodes-nvidianim.git"
+  },
+  "scripts": {
+    "build": "n8n-node build && node scripts/postbuild.js",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease",
+    "test": "node --test tests/**/*.test.mjs",
+    "test:live": "node scripts/verify-live.mjs",
+    "test:diag": "node scripts/diagnostic.mjs",
+    "test:live-node": "node scripts/live-test-node.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/NvidianimApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Nvidianim/Nvidianim.node.js",
+      "dist/nodes/NvidiaNimChatModel/NvidiaNimChatModel.node.js"
+    ],
+    "aiNodeSdkVersion": 1
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "release-it": "^21.1.0",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "@n8n/ai-node-sdk": "*",
+    "n8n-workflow": "*"
+  }
+}

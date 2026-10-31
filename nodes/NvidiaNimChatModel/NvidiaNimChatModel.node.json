@@ -1,0 +1,18 @@
+{
+  "node": "n8n-nodes-nvidianim.nvidiaNimChatModel",
+  "nodeSpecVersion": 1,
+  "version": [
+    1
+  ],
+  "categories": [
+    "Development",
+    "Utility"
+  ],
+  "resources": {
+    "primaryDocumentation": [
+      {
+        "url": "https://build.nvidia.com/explore/discover"
+      }
+    ]
+  }
+}
