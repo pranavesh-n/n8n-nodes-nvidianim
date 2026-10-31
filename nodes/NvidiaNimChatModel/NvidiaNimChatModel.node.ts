@@ -349,16 +349,17 @@ export class NvidiaNimChatModel implements INodeType {
 			},
 		});
 
-		const onFailedAttempt = (error: any) => {
-			if (error?.status === 404 || error?.statusCode === 404) {
-				const detail = error?.error?.detail || error?.message || '';
+		const onFailedAttempt = (error: unknown) => {
+			const err = error as { status?: number; statusCode?: number; error?: { detail?: string }; message?: string };
+			if (err?.status === 404 || err?.statusCode === 404) {
+				const detail = err?.error?.detail || err?.message || '';
 				throw new NodeOperationError(
 					this.getNode(),
 					`NVIDIA NIM API Error (404 Not Found): ${detail || 'Model not enabled or not found on this NVIDIA account'}. Verify the model ID or check your account entitlements at build.nvidia.com.`,
 				);
 			}
-			if (error?.status === 410 || error?.statusCode === 410) {
-				const detail = error?.error?.detail || error?.message || 'Model has reached end of life';
+			if (err?.status === 410 || err?.statusCode === 410) {
+				const detail = err?.error?.detail || err?.message || 'Model has reached end of life';
 				throw new NodeOperationError(
 					this.getNode(),
 					`NVIDIA NIM API Error (410 End of Life): ${detail}`,
@@ -383,19 +384,31 @@ export class NvidiaNimChatModel implements INodeType {
 			onFailedAttempt,
 		});
 
-		const completions = (supplyResult.response as any)?.completions;
+		const modelResponse = supplyResult.response as unknown as {
+			completions?: {
+				clientConfig?: {
+					fetch?: (...args: Parameters<typeof fetch>) => ReturnType<typeof fetch>;
+				};
+			};
+		};
+		const completions = modelResponse?.completions;
 		if (completions?.clientConfig) {
-			const originalFetch = completions.clientConfig.fetch || globalThis.fetch;
-			completions.clientConfig.fetch = async (input: any, init: any) => {
+			const originalFetch = completions.clientConfig.fetch ?? fetch;
+			completions.clientConfig.fetch = async (
+				input: Parameters<typeof fetch>[0],
+				init?: Parameters<typeof fetch>[1],
+			) => {
 				const response = await originalFetch(input, init);
 				if (!response.ok) {
 					try {
 						const clone = response.clone();
 						const rawText = await clone.text();
-						let parsed: any;
+						let parsed: { detail?: string; title?: string; error?: { message?: string } } | undefined;
 						try {
-							parsed = JSON.parse(rawText);
-						} catch {}
+							parsed = JSON.parse(rawText) as { detail?: string; title?: string; error?: { message?: string } };
+						} catch {
+							parsed = undefined;
+						}
 
 						if (parsed && (parsed.detail || parsed.title) && !parsed.error?.message) {
 							const message = parsed.detail || parsed.title || response.statusText;
@@ -413,7 +426,7 @@ export class NvidiaNimChatModel implements INodeType {
 							});
 						}
 					} catch {
-						// Return original response if clone/parse fails
+						return response;
 					}
 				}
 				return response;
