@@ -38,11 +38,20 @@ function isChatCompatible(modelId: string): boolean {
 		lower.includes('sdxl') ||
 		lower.includes('flux') ||
 		lower.includes('audio') ||
-		lower.includes('starcoder')
+		lower.includes('starcoder') ||
+		lower.includes('reward') ||
+		lower.includes('guard')
 	) {
 		return false;
 	}
-	return true;
+
+	return (
+		lower.includes('instruct') ||
+		lower.includes('chat') ||
+		lower.includes('nemotron') ||
+		lower.includes('-it') ||
+		lower.includes('deepseek')
+	);
 }
 
 export class NvidiaNimChatModel implements INodeType {
@@ -355,7 +364,7 @@ export class NvidiaNimChatModel implements INodeType {
 				const detail = err?.error?.detail || err?.message || '';
 				throw new NodeOperationError(
 					this.getNode(),
-					`NVIDIA NIM API Error (404 Not Found): ${detail || 'Model not enabled or not found on this NVIDIA account'}. Verify the model ID or check your account entitlements at build.nvidia.com.`,
+					`NVIDIA NIM API Error (404 Not Found): Model "${model}" is not supported on the chat endpoint (it is either deprecated or a raw text model). Please select a different model.${detail ? ` [Detail: ${detail}]` : ''}`,
 				);
 			}
 			if (err?.status === 410 || err?.statusCode === 410) {
