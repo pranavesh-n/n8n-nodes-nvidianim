@@ -13,19 +13,21 @@ import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 import { DEFAULT_TIMEOUT_MS, NVIDIA_API_BASE_URL, nvidiaApiRequest } from '../Nvidianim/transport/index.js';
 
 const FALLBACK_MODELS: INodePropertyOptions[] = [
-	{ name: 'NVIDIA: Llama 3.1 Nemotron 70B Instruct', value: 'nvidia/llama-3.1-nemotron-70b-instruct' },
-	{ name: 'NVIDIA: Nemotron 3 Nano Omni 30B Reasoning', value: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning' },
 	{ name: 'NVIDIA: Nemotron 4 340B Instruct', value: 'nvidia/nemotron-4-340b-instruct' },
-	{ name: 'Meta: Llama 3.3 70B Instruct', value: 'meta/llama-3.3-70b-instruct' },
-	{ name: 'Meta: Llama 3.1 70B Instruct', value: 'meta/llama-3.1-70b-instruct' },
-	{ name: 'Meta: Llama 3.1 8B Instruct', value: 'meta/llama-3.1-8b-instruct' },
-	{ name: 'Meta: Llama 3.1 405B Instruct', value: 'meta/llama-3.1-405b-instruct' },
-	{ name: 'Mistral: Mixtral 8x7B Instruct', value: 'mistralai/mixtral-8x7b-instruct-v0.1' },
+	{ name: 'NVIDIA: Nemotron 3.5 Bolt', value: 'nvidia/nemotron-3.5-bolt-e4b' },
+	{ name: 'NVIDIA: Nemotron 3 Nano Omni Reasoning', value: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning' },
+	{ name: 'NVIDIA: Nemotron 3 Super 120B', value: 'nvidia/nemotron-3-super-120b-a12b' },
+	{ name: 'NVIDIA: Nemotron 3 Ultra 550B', value: 'nvidia/nemotron-3-ultra-550b-a55b' },
 	{ name: 'Mistral: Mistral Large 2 Instruct', value: 'mistralai/mistral-large-2-instruct' },
-	{ name: 'DeepSeek: DeepSeek R1', value: 'deepseek-ai/deepseek-r1' },
-	{ name: 'Microsoft: Phi-3 Medium 128k Instruct', value: 'microsoft/phi-3-medium-128k-instruct' },
-	{ name: 'Google: Gemma 2 9B Instruct', value: 'google/gemma-2-9b-it' },
-	{ name: 'Google: Gemma 2 27B Instruct', value: 'google/gemma-2-27b-it' },
+	{ name: 'Mistral: Mistral 7B Instruct v0.3', value: 'mistralai/mistral-7b-instruct-v0.3' },
+	{ name: 'Mistral / NVIDIA: Mistral NeMo 12B Instruct', value: 'nv-mistralai/mistral-nemo-12b-instruct' },
+	{ name: 'Meta: Llama 3.2 11B Vision Instruct', value: 'meta/llama-3.2-11b-vision-instruct' },
+	{ name: 'Meta: Llama 3.2 90B Vision Instruct', value: 'meta/llama-3.2-90b-vision-instruct' },
+	{ name: 'DeepSeek: DeepSeek v4.1 Flash', value: 'deepseek-ai/deepseek-v4.1-flash' },
+	{ name: 'Google: Gemma 3 12B Instruct', value: 'google/gemma-3-12b-it' },
+	{ name: 'Google: Gemma 3 4B Instruct', value: 'google/gemma-3-4b-it' },
+	{ name: 'Meta: Llama 3.1 70B Instruct', value: 'meta/llama-3.1-70b-instruct' },
+	{ name: 'IBM: Granite 3.0 8B Instruct', value: 'ibm/granite-3.0-8b-instruct' },
 ];
 
 function isChatCompatible(modelId: string): boolean {
@@ -94,7 +96,7 @@ export class NvidiaNimChatModel implements INodeType {
 				displayName: 'Model',
 				name: 'model',
 				type: 'resourceLocator',
-				default: { mode: 'list', value: 'nvidia/llama-3.1-nemotron-70b-instruct' },
+				default: { mode: 'list', value: 'nvidia/nemotron-4-340b-instruct' },
 				required: true,
 				modes: [
 					{

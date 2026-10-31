@@ -1,4 +1,4 @@
-﻿import type { INodeProperties } from 'n8n-workflow';
+import type { INodeProperties } from 'n8n-workflow';
 
 export const textOperations: INodeProperties[] = [
 	{
@@ -34,7 +34,7 @@ export const textFields: INodeProperties[] = [
 		displayName: 'Model',
 		name: 'model',
 		type: 'resourceLocator',
-		default: { mode: 'list', value: 'meta/llama-3.3-70b-instruct' },
+		default: { mode: 'list', value: 'nvidia/nemotron-4-340b-instruct' },
 		required: true,
 		description: 'The NVIDIA NIM model to message',
 		displayOptions: {

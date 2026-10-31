@@ -98,11 +98,11 @@ export class Nvidianim implements INodeType {
 		listSearch: {
 			async getModels(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				const fallbacks = [
-					{ name: 'meta/llama-3.3-70b-instruct', value: 'meta/llama-3.3-70b-instruct' },
-					{ name: 'meta/llama-3.1-8b-instruct', value: 'meta/llama-3.1-8b-instruct' },
+					{ name: 'nvidia/nemotron-3.5-bolt-e4b', value: 'nvidia/nemotron-3.5-bolt-e4b' },
+					{ name: 'meta/llama-3.2-11b-vision-instruct', value: 'meta/llama-3.2-11b-vision-instruct' },
 					{ name: 'nvidia/nemotron-4-340b-instruct', value: 'nvidia/nemotron-4-340b-instruct' },
 					{ name: 'mistralai/mistral-large-2-instruct', value: 'mistralai/mistral-large-2-instruct' },
-					{ name: 'deepseek-ai/deepseek-r1', value: 'deepseek-ai/deepseek-r1' },
+					{ name: 'deepseek-ai/deepseek-v4.1-flash', value: 'deepseek-ai/deepseek-v4.1-flash' },
 				];
 
 				try {
