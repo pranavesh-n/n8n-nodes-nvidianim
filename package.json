@@ -1,6 +1,9 @@
 {
   "name": "@shadow_boii/n8n-nodes-nvidianim",
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "n8n community node for NVIDIA NIM hosted models and inference APIs",
   "license": "MIT",
   "homepage": "https://github.com/pranavesh-n/n8n-nodes-nvidianim",
