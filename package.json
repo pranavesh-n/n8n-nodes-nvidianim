@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-nvidianim",
+  "name": "@shadow_boii/n8n-nodes-nvidianim",
   "version": "0.1.1",
   "description": "n8n community node for NVIDIA NIM hosted models and inference APIs",
   "license": "MIT",
