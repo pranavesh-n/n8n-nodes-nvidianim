@@ -48,7 +48,7 @@ export class NvidianimApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: 'https://integrate.api.nvidia.com/v1',
+			baseURL: '={{$credentials?.baseUrl || "https://integrate.api.nvidia.com/v1"}}',
 			url: '/models',
 			method: 'GET',
 		},

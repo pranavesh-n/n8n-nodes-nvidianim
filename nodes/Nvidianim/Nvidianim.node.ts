@@ -108,17 +108,14 @@ export class Nvidianim implements INodeType {
 				try {
 					const response = await nvidiaApiRequest.call(this, 'GET', '/models');
 					const data = (response.data as Array<{ id: string }>) || [];
-					let results = data.map((item) => ({
-						name: item.id,
-						value: item.id,
-					}));
+					let results = data.length > 0 ? data.map((item) => ({ name: item.id, value: item.id })) : [...fallbacks];
 
 					if (filter) {
 						results = results.filter((m) => m.name.toLowerCase().includes(filter.toLowerCase()));
 					}
 
 					results.sort((a, b) => a.name.localeCompare(b.name));
-					return { results: results.length > 0 ? results : fallbacks };
+					return { results };
 				} catch {
 					const filtered = filter
 						? fallbacks.filter((m) => m.name.toLowerCase().includes(filter.toLowerCase()))
@@ -138,7 +135,7 @@ export class Nvidianim implements INodeType {
 					const response = await nvidiaApiRequest.call(this, 'GET', '/models');
 					const data = (response.data as Array<{ id: string }>) || [];
 					let results = data
-						.filter((item) => item.id.includes('vision') || item.id.includes('vl') || item.id.includes('neva'))
+						.filter((item) => typeof item?.id === 'string' && (item.id.toLowerCase().includes('vision') || item.id.toLowerCase().includes('vl') || item.id.toLowerCase().includes('neva')))
 						.map((item) => ({
 							name: item.id,
 							value: item.id,
@@ -174,7 +171,7 @@ export class Nvidianim implements INodeType {
 					const response = await nvidiaApiRequest.call(this, 'GET', '/models');
 					const data = (response.data as Array<{ id: string }>) || [];
 					let results = data
-						.filter((item) => item.id.includes('embed') || item.id.includes('bge'))
+						.filter((item) => typeof item?.id === 'string' && (item.id.toLowerCase().includes('embed') || item.id.toLowerCase().includes('bge')))
 						.map((item) => ({
 							name: item.id,
 							value: item.id,

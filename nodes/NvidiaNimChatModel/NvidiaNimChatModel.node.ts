@@ -419,10 +419,14 @@ export class NvidiaNimChatModel implements INodeType {
 									code: response.status,
 								},
 							});
+							const headers = new Headers(response.headers);
+							headers.delete('content-length');
+							headers.delete('content-encoding');
+							headers.set('content-type', 'application/json');
 							return new Response(customBody, {
 								status: response.status,
 								statusText: response.statusText,
-								headers: response.headers,
+								headers,
 							});
 						}
 					} catch {

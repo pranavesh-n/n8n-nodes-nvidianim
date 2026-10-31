@@ -26,7 +26,7 @@ test('1. Credential: configuration and test request', () => {
 	assert.equal(apiKeyProp.typeOptions?.password, true);
 
 	// Test request endpoint check: MUST NOT double append /v1
-	assert.equal(cred.test?.request.baseURL, 'https://integrate.api.nvidia.com/v1');
+	assert.equal(cred.test?.request.baseURL, '={{$credentials?.baseUrl || "https://integrate.api.nvidia.com/v1"}}');
 	assert.equal(cred.test?.request.url, '/models');
 	assert.equal(cred.test?.request.method, 'GET');
 });
